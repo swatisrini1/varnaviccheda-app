@@ -84,14 +84,14 @@ def purvarupa_sandhi(word: str) -> list:
 
 # ---------------- Streamlit UI ----------------
 
-st.set_page_config(page_title="संस्कृत उपकरण", page_icon="🕉️")
+st.set_page_config(page_title="संस्कृतोपयोगीनि उपकरणानि", page_icon="🕉️")
 
 st.title("🕉️ संस्कृत उपकरण (Sanskrit Tools)")
 
-tab1, tab2 = st.tabs(["वर्ण विच्छेद", "पूर्वरूप सन्धि"])
+tab1, tab2 = st.tabs(["वर्णविच्छेदः", "पूर्वरूपसन्धिः"])
 
 with tab1:
-    st.subheader("वर्ण विच्छेद (Varna Viccheda)")
+    st.subheader("वर्णविच्छेदः (Varna Viccheda)")
     st.write("Enter a Devanagari word to see its letter-by-letter split.")
 
     word = st.text_input("शब्दं लिखतु / Enter word:", value="रामः", key="vv_input")
@@ -107,7 +107,7 @@ with tab1:
         st.info("Type a word above to see the result.")
 
 with tab2:
-    st.subheader("पूर्वरूप सन्धि (Purvarupa Sandhi)")
+    st.subheader("पूर्वरूपसन्धिः (Purvarupa Sandhi)")
     st.write("Enter a word with avagraha (ऽ) to split it back into its two original words.")
 
     pp_word = st.text_input("शब्दं लिखतु / Enter word:", value="हरेऽत्र", key="pp_input")
