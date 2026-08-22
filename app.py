@@ -64,7 +64,7 @@ def varna_viccheda(padam: str) -> str:
 
 st.set_page_config(page_title="वर्ण विच्छेद", page_icon="🕉️")
 
-st.title("🕉️ वर्ण विच्छेद (Varna Viccheda)")
+st.title("🕉️ वर्णविच्छेद: (Varna Viccheda)")
 st.write("Enter a Devanagari word to see its letter-by-letter split.")
 
 word = st.text_input("शब्दं लिखतु / Enter word:", value="रामः")
