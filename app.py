@@ -84,7 +84,7 @@ def purvarupa_sandhi(word: str) -> list:
 
 # ---------------- Streamlit UI ----------------
 
-st.set_page_config(page_title="संस्कृतोपयोगीनि उपकरणानि", page_icon="🕉️")
+st.set_page_config(page_title="संस्कृतोपयोगिनि उपकरणानि", page_icon="🕉️")
 
 st.title(" संस्कृतोपयोगीनि उपकरणानि (Sanskrit Tools)")
 
