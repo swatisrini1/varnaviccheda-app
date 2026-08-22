@@ -81,14 +81,68 @@ def purvarupa_sandhi(word: str) -> list:
 
     return pp_up
 
+def vowel_assign(matra: str):
+    """Map a matra sign to its independent vowel form (empty string -> अ)."""
+    matra_to_vowel_map = {
+        "ा": "आ", "ि": "इ", "ी": "ई", "ु": "उ", "ू": "ऊ",
+        "ृ": "ऋ", "ॄ": "ॠ", "ॢ": "ऌ", "ॣ": "ॡ",
+        "े": "ए", "ै": "ऐ", "ो": "ओ", "ौ": "औ", "": "अ"
+    }
+    return matra_to_vowel_map.get(matra)
 
+
+def vowel_to_matra(vowel: str):
+    """Map an independent vowel form back to its matra sign (अ -> empty string)."""
+    vowel_to_matra_map = {
+        "अ": "", "आ": "ा", "इ": "ि", "ई": "ी", "उ": "ु", "ऊ": "ू",
+        "ऋ": "ृ", "ॠ": "ॄ", "ऌ": "ॢ", "ॡ": "ॣ", "ए": "े", "ऐ": "ै", "ओ": "ो", "औ": "ौ"
+    }
+    return vowel_to_matra_map.get(vowel)
+
+
+def savarna_deergha_sandhi(purvapada: str, uttarapada: str) -> str:
+    """Join two words using सवर्ण दीर्घ सन्धि (similar vowels -> long vowel)."""
+    savarna_rules = {
+        'अ': 'आ', 'आ': 'आ',
+        'इ': 'ई', 'ई': 'ई',
+        'उ': 'ऊ', 'ऊ': 'ऊ',
+        'ऋ': 'ॠ', 'ऌ': 'ॠ'
+    }
+
+    if not purvapada or not uttarapada:
+        raise ValueError("Please enter both the first and second word.")
+
+    consonants_str = 'कखगघङचछजझञटठडढणतथदधनपफबभमयरलवशषसह'
+
+    v1_char = purvapada[-1]
+    if v1_char in consonants_str:
+        v1 = 'अ'
+    else:
+        v1 = vowel_assign(v1_char)
+
+    v2 = uttarapada[0]
+
+    if v1 is None or v2 not in savarna_rules:
+        raise ValueError("Could not identify valid vowels at the junction. Example: रमा + आगच्छति")
+
+    if v1 not in savarna_rules or v2 not in savarna_rules or savarna_rules[v1] != savarna_rules[v2]:
+        raise ValueError(f"सवर्ण दीर्घ सन्धि does not apply between '{v1}' and '{v2}'. "
+                          f"It applies only when both vowels belong to the same अ/इ/उ/ऋ group.")
+
+    merged_vowel = savarna_rules[v1]
+    result_matra = vowel_to_matra(merged_vowel)
+
+    p = purvapada[:-1] if v1 != 'अ' else purvapada
+    u = uttarapada[1:]
+
+    return p + result_matra + u
 # ---------------- Streamlit UI ----------------
 
 st.set_page_config(page_title="संस्कृतोपयोगिनि उपकरणानि", page_icon="🕉️")
 
 st.title(" संस्कृतोपयोगिनि उपकरणानि (Sanskrit Tools)")
 
-tab1, tab2 = st.tabs(["वर्णविच्छेदः", "पूर्वरूपसन्धिः"])
+tab1, tab2, tab3 = st.tabs(["वर्णविच्छेदः", "पूर्वरूपसन्धिः"])
 
 with tab1:
     st.subheader("वर्णविच्छेदः (Varna Viccheda)")
@@ -121,6 +175,25 @@ with tab2:
             st.error(str(e))
     else:
         st.info("Type a word above to see the result.")
+with tab3:
+    st.subheader("सवर्णदीर्घसन्धि: (Savarna Deergha Sandhi)")
+    st.write("Enter two words to join them when their vowels at the junction are savarna (same group).")
+
+    col1, col2 = st.columns(2)
+    with col1:
+        purvapada = st.text_input("पूर्वपदम् / First word:", value="रमा", key="sd_purva")
+    with col2:
+        uttarapada = st.text_input("उत्तरपदम् / Second word:", value="आगच्छति", key="sd_uttara")
+
+    if purvapada.strip() and uttarapada.strip():
+        try:
+            joined = savarna_deergha_sandhi(purvapada.strip(), uttarapada.strip())
+            st.markdown("### Result:")
+            st.markdown(f"## {purvapada} + {uttarapada} = {joined}")
+        except ValueError as e:
+            st.error(str(e))
+    else:
+        st.info("Enter both words above to see the result.")
 
 st.markdown("---")
 st.caption("Built for Shastra course demonstration.")
