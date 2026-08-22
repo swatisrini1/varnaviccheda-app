@@ -86,7 +86,7 @@ def purvarupa_sandhi(word: str) -> list:
 
 st.set_page_config(page_title="संस्कृतोपयोगीनि उपकरणानि", page_icon="🕉️")
 
-st.title("🕉️ संस्कृत उपकरण (Sanskrit Tools)")
+st.title(" संस्कृतोपयोगीनि उपकरणानि (Sanskrit Tools)")
 
 tab1, tab2 = st.tabs(["वर्णविच्छेदः", "पूर्वरूपसन्धिः"])
 
