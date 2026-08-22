@@ -142,7 +142,7 @@ st.set_page_config(page_title="संस्कृतोपयोगिनि उ
 
 st.title(" संस्कृतोपयोगिनि उपकरणानि (Sanskrit Tools)")
 
-tab1, tab2, tab3 = st.tabs(["वर्णविच्छेदः", "पूर्वरूपसन्धिः"])
+tab1, tab2, tab3 = st.tabs(["वर्णविच्छेदः", "पूर्वरूपसन्धिः","सवर्णदीर्घसन्धिः"])
 
 with tab1:
     st.subheader("वर्णविच्छेदः (Varna Viccheda)")
